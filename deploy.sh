@@ -16,7 +16,7 @@ npm install --omit=dev
 
 cd "$DEPLOY_DIR/frontend"
 npm install
-VITE_API_URL="http://$DOMAIN:$BACKEND_PORT/api" npm run build
+NEXT_PUBLIC_API_URL="http://$DOMAIN:$BACKEND_PORT/api" npm run build
 
 pm2 restart todo-backend
 pm2 restart todo-frontend

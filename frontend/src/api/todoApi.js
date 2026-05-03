@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE = import.meta.env.VITE_API_URL;
+const BASE = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchTodos = () => axios.get(`${BASE}/todos`);
 export const createTodo = (payload) => axios.post(`${BASE}/todos`, payload);

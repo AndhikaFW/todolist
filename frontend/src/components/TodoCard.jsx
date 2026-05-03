@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './TodoCard.module.css';
 
 function formatDate(isoString) {

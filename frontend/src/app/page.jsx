@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import Navbar from './components/Navbar';
-import TodoGrid from './components/TodoGrid';
-import AddTodoModal from './components/AddTodoModal';
-import { useTodos } from './hooks/useTodos';
-import styles from './App.module.css';
+'use client';
 
-export default function App() {
+import { useState } from 'react';
+import Navbar from '../components/Navbar';
+import TodoGrid from '../components/TodoGrid';
+import AddTodoModal from '../components/AddTodoModal';
+import { useTodos } from '../hooks/useTodos';
+import styles from './page.module.css';
+
+export default function Home() {
   const { todos, loading, addTodo, removeTodo } = useTodos();
   const [showModal, setShowModal] = useState(false);
 

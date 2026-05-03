@@ -1,3 +1,5 @@
+'use client';
+
 import TodoCard from './TodoCard';
 import styles from './TodoGrid.module.css';
 
