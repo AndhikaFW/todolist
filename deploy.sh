@@ -9,6 +9,7 @@ FRONTEND_PORT=5672
 echo "=== Deploy update ==="
 
 cd "$DEPLOY_DIR"
+git checkout -- frontend/package-lock.json backend/package-lock.json 2>/dev/null || true
 git pull
 
 cd "$DEPLOY_DIR/backend"

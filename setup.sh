@@ -14,6 +14,7 @@ echo "=== Setup awal server ==="
 if [ -d "$DEPLOY_DIR/.git" ]; then
   echo "--- Update repo ---"
   cd "$DEPLOY_DIR"
+  git checkout -- frontend/package-lock.json backend/package-lock.json 2>/dev/null || true
   git pull
 else
   echo "--- Clone repo ---"
