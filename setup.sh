@@ -2,7 +2,7 @@
 set -e
 
 REPO="https://github.com/AndhikaFW/todolist.git"
-DEPLOY_DIR="/var/www/todolist"
+DEPLOY_DIR="$HOME/todolist"
 DOMAIN="todolist.norugroup.com"
 DB_NAME="tutam_todos"
 DB_USER="postgres"
@@ -12,9 +12,7 @@ CURRENT_USER=$(logname 2>/dev/null || whoami)
 
 echo "=== Setup awal server ==="
 
-# Buat direktori dan atur kepemilikan
-sudo mkdir -p "$DEPLOY_DIR"
-sudo chown "$CURRENT_USER":"$CURRENT_USER" "$DEPLOY_DIR"
+mkdir -p "$DEPLOY_DIR"
 
 # Clone atau update repo
 if [ -d "$DEPLOY_DIR/.git" ]; then

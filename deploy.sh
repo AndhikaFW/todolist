@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DEPLOY_DIR="/var/www/todolist"
+DEPLOY_DIR="$HOME/todolist"
 DOMAIN="todolist.norugroup.com"
 BACKEND_PORT=5671
 FRONTEND_PORT=5672
