@@ -8,9 +8,15 @@ DB_NAME="tutam_todos"
 DB_USER="postgres"
 BACKEND_PORT=5671
 FRONTEND_PORT=5672
+CURRENT_USER=$(logname 2>/dev/null || whoami)
 
 echo "=== Setup awal server ==="
 
+# Buat direktori dan atur kepemilikan
+sudo mkdir -p "$DEPLOY_DIR"
+sudo chown "$CURRENT_USER":"$CURRENT_USER" "$DEPLOY_DIR"
+
+# Clone atau update repo
 if [ -d "$DEPLOY_DIR/.git" ]; then
   echo "--- Update repo ---"
   cd "$DEPLOY_DIR"
@@ -22,6 +28,7 @@ else
   cd "$DEPLOY_DIR"
 fi
 
+# Buat .env backend jika belum ada
 if [ ! -f "$DEPLOY_DIR/backend/.env" ]; then
   cat > "$DEPLOY_DIR/backend/.env" <<EOF
 DB_HOST=localhost
@@ -38,6 +45,7 @@ EOF
   exit 0
 fi
 
+# Setup database PostgreSQL (butuh sudo)
 echo "--- Setup database PostgreSQL ---"
 sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" \
   | grep -q 1 || sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
@@ -53,15 +61,18 @@ CREATE TABLE IF NOT EXISTS todos (
 CREATE INDEX IF NOT EXISTS idx_todos_created_at ON todos (created_at DESC);
 "
 
+# Install backend dependencies
 echo "--- Install backend dependencies ---"
 cd "$DEPLOY_DIR/backend"
 npm install --omit=dev
 
+# Build frontend
 echo "--- Build frontend ---"
 cd "$DEPLOY_DIR/frontend"
 npm install
 npm run build
 
+# Setup PM2 (tanpa sudo)
 echo "--- Setup PM2 ---"
 cd "$DEPLOY_DIR/backend"
 pm2 delete todo-backend 2>/dev/null || true
@@ -72,7 +83,11 @@ pm2 delete todo-frontend 2>/dev/null || true
 pm2 start npm --name todo-frontend -- run start -- -H 0.0.0.0
 
 pm2 save
-pm2 startup | tail -1 | bash 2>/dev/null || true
+
+# Setup PM2 startup (bagian ini butuh sudo sekali)
+echo ""
+echo "--- Setup PM2 startup ---"
+pm2 startup | grep "sudo" | bash || true
 
 echo ""
 echo "=== Setup selesai ==="
