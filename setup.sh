@@ -60,7 +60,7 @@ npm install --omit=dev
 echo "--- Build frontend ---"
 cd "$DEPLOY_DIR/frontend"
 npm install
-NEXT_PUBLIC_API_URL="http://$DOMAIN:$BACKEND_PORT/api" npm run build
+npm run build
 
 echo "--- Setup PM2 ---"
 cd "$DEPLOY_DIR/backend"
@@ -69,7 +69,7 @@ pm2 start server.js --name todo-backend
 
 cd "$DEPLOY_DIR/frontend"
 pm2 delete todo-frontend 2>/dev/null || true
-pm2 start npm --name todo-frontend -- run start
+pm2 start npm --name todo-frontend -- run start -- -H 0.0.0.0
 
 pm2 save
 pm2 startup | tail -1 | bash 2>/dev/null || true

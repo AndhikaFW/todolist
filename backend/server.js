@@ -9,5 +9,5 @@ pool.connect((err, client, release) => {
     process.exit(1);
   }
   release();
-  app.listen(PORT);
+  app.listen(PORT, '0.0.0.0');
 });
