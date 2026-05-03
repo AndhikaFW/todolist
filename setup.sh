@@ -6,7 +6,7 @@ DEPLOY_DIR="/var/www/todolist"
 DOMAIN="todolist.norugroup.com"
 DB_NAME="tutam_todos"
 DB_USER="postgres"
-BACKEND_PORT=3131
+BACKEND_PORT=5671
 
 echo "=== Setup awal server ==="
 
