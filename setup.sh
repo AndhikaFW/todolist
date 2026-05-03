@@ -2,7 +2,7 @@
 set -e
 
 REPO="https://github.com/AndhikaFW/todolist.git"
-DEPLOY_DIR="$HOME/todolist"
+DEPLOY_DIR="$HOME/homework/todolist"
 DOMAIN="todolist.norugroup.com"
 DB_NAME="tutam_todos"
 DB_USER="postgres"
